@@ -1,0 +1,91 @@
+---
+title: "Introduction to JointDichotomization"
+author: "Robert Fu and Amara Nwokoye"
+date: "February 13, 2025"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to JointDichotomization}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Introduction  
+The `JointDichotomization` package identifies optimal cutpoints for joint dichotomization of two continuous predictors (`X1` and `X2`) to classify a binary outcome (`Y`). It supports five classification metrics: Odds Ratio, Youden's Index, Gini, Kappa, and Chi-Square.
+
+## Installation  
+Install the package and its dependencies:
+```{r, eval=FALSE}
+# Install from GitHub (replace 'username' with your GitHub handle)
+devtools::install_github("username/JointDichotomization")
+
+# Or install locally from source
+devtools::install("~/JointDichotomization")
+
+# Load the package
+library(JointDichotomization)
+```
+
+## Simulate Data  
+```{r}
+library(JointDichotomization)
+set.seed(123)  # For reproducibility
+
+# Simulate data with:
+data <- data.frame(
+  X1 = rnorm(500),
+  X2 = rnorm(500),
+  Y = sample(0:1, 500, replace = TRUE)
+)
+
+# Preview the first 6 rows
+head(data)
+```
+
+## Visualize Simulated Data  
+Plot the relationship between predictors and outcome:
+```{r}
+library(ggplot2)
+ggplot(data, aes(x = X1, y = X2, color = factor(Y))) +
+  geom_point(alpha = 0.6) +
+  labs(
+    title = "Simulated Data: X1 vs. X2 by Outcome",
+    x = "Predictor X1",
+    y = "Predictor X2",
+    color = "Outcome (Y)"
+  )
+```
+
+## Compute Optimal Cutpoints  
+Run the `Joint` function to calculate thresholds:
+```{r}
+# Compute optimal cutpoints (py = prevalence of Y in the population)
+library(JointDichotomization)
+results <- Joint(data, py = 0.5)
+
+# Display results
+print(results)
+```
+
+## Interpret Results  
+The output will show a table like this (values vary by simulation):
+```
+          Method        X1        X2
+1      Odds Ratio 0.8743291 0.5124672
+2 Youden's Index 0.8921567 0.4981234
+3           Gini 0.8654321 0.5234567
+4          Kappa 0.8812345 0.5098765
+5     Chi-Square 0.8901234 0.5012345
+```
+
+## Visualize Results  
+Compare thresholds across methods:
+```{r}
+ggplot(results, aes(x = X1, y = X2, color = Method)) +
+  geom_point(size = 4) +
+  labs(
+    title = "Optimal Cutpoints by Classification Method",
+    x = "Threshold for X1",
+    y = "Threshold for X2"
+  ) +
+  theme_minimal()
+```

@@ -1,0 +1,23 @@
+Package: JointDichotomization
+Title: Optimal Cutpoints for Joint Dichotomization
+Version: 0.1.0
+Authors@R: 
+    person("Sybil", "Prince Nelson", email = "sprincenelson@wlu.edu", 
+           role = c("aut", "cre"))
+Description: The `JointDichotomization` package identifies optimal cutpoints for 
+    joint dichotomization of two continuous predictors (`X1` and `X2`) to classify 
+    a binary outcome (`Y`). It supports five classification metrics: 
+    Odds Ratio, Youden's Index, Gini, Kappa, and Chi-Square.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Imports:
+    mgcv,
+    ggplot2
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+URL: https://github.com/mylovelyladylocs/JointDichotomization
+BugReports: https://github.com/mylovelyladylocs/JointDichotomization/issues
